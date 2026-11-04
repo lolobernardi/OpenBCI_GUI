@@ -1,3 +1,71 @@
+# OpenBCI GUI — versión modificada para dispositivo Bluetooth (Tesis)
+
+Este repositorio es una copia del [OpenBCI GUI oficial](https://github.com/OpenBCI/OpenBCI_GUI) con **un único cambio**, necesario para poder conectar la interfaz a un dispositivo Bluetooth que emula una placa **Cyton** de OpenBCI.
+
+## ¿Por qué se hizo el cambio?
+
+La GUI original sólo muestra como puertos válidos para la Cyton aquellos cuyo nombre empieza con `FT231X USB UART` o `VCP`, es decir, el chip FTDI del dongle USB oficial de OpenBCI. Cualquier otro puerto serie se descarta.
+
+Un dispositivo Bluetooth que emula la Cyton aparece en el sistema como un puerto serie virtual con otro nombre (en Windows, por ejemplo, *"Standard Serial over Bluetooth link"*). Por eso, **sin el cambio la GUI no lo lista, no lo reconoce y no hay forma de conectarse**, aunque el dispositivo envíe datos con el mismo protocolo que una Cyton real.
+
+El cambio está en [`OpenBCI_GUI/ControlPanel.pde`](OpenBCI_GUI/ControlPanel.pde), en el método `getCytonComPorts()`. Ya no se filtra por el nombre del puerto: se listan **todos** los puertos serie disponibles. Se mantiene sólo el filtro de macOS que descarta los `tty.*`, porque allí se usan los `cu.*`. La versión original del método quedó comentada justo arriba, como referencia.
+
+## Cómo usar la GUI con el cambio (desde Processing)
+
+### 1. Instalar Processing 4
+
+Descargá **Processing 4** desde <https://processing.org/download> (el proyecto oficial compila con la versión 4.2) y descomprimilo o instalalo.
+
+### 2. Descargar este repositorio
+
+```bash
+git clone https://github.com/lolobernardi/OpenBCI_GUI.git
+```
+
+o, desde GitHub, usá **Code → Download ZIP** y descomprimí el archivo.
+
+### 3. Copiar las librerías
+
+La GUI necesita las librerías que vienen incluidas en la carpeta [`OpenBCI_GUI/libraries`](OpenBCI_GUI/libraries). Copiá **todo el contenido** de esa carpeta a la carpeta de librerías de tu sketchbook de Processing:
+
+| Sistema | Carpeta de destino |
+|---|---|
+| Windows | `Documentos\Processing\libraries` |
+| macOS | `~/Documents/Processing/libraries` |
+| Linux | `~/sketchbook/libraries` |
+
+(Si la carpeta `libraries` no existe, creala. Podés confirmar la ubicación del sketchbook en Processing: **File → Preferences → Sketchbook location**.)
+
+### 4. Abrir y ejecutar el sketch
+
+1. Abrí Processing.
+2. **File → Open…** y elegí `OpenBCI_GUI/OpenBCI_GUI.pde` (la carpeta `OpenBCI_GUI` que está dentro del repositorio).
+3. Apretá **Run** (▶). La primera compilación puede tardar unos segundos.
+
+### 5. Conectar el dispositivo Bluetooth
+
+1. Encendé el dispositivo y **emparejalo con la computadora** desde la configuración de Bluetooth del sistema operativo.
+   - En Windows, al emparejarlo se crean puertos COM virtuales. Para ver cuál usar, andá a *Configuración de Bluetooth → Más opciones de Bluetooth → Puertos COM* y buscá el puerto **Saliente** asociado al dispositivo.
+2. En la GUI, elegí **CYTON (live)** → **Serial (from Dongle)**.
+3. Hacé clic en **Manual >** y seleccioná el puerto COM del dispositivo en la lista. Gracias al cambio, ahora aparece.
+4. Elegí la cantidad de canales (8 / 16) y hacé clic en **START SESSION**. Después, en **Start Data Stream**.
+
+> El botón **AUTO-CONNECT** y las opciones de radio (AUTO-SCAN, CHANGE CHAN., etc.) están pensadas para el dongle oficial y probablemente no funcionen con el dispositivo Bluetooth. Usá la selección manual del puerto.
+
+## Otra forma de ejecutarla: aplicación exportada (sin Processing)
+
+Processing permite exportar el sketch como una aplicación independiente (**File → Export Application…**). Así se genera un ejecutable (`OpenBCI_GUI.exe` en Windows) que **ya incluye Java y el cambio**, y se usa sin instalar Processing ni copiar librerías:
+
+1. Descargá el `.zip` de la aplicación desde la sección [Releases](../../releases) del repositorio (si está publicado) o generalo vos mismo con *Export Application*.
+2. Descomprimilo.
+3. Ejecutá `OpenBCI_GUI.exe` y seguí el paso 5 de arriba para conectar el dispositivo.
+
+> El instalador oficial que se descarga de la página de OpenBCI **no** tiene este cambio, así que no sirve para este dispositivo.
+
+---
+
+*A continuación sigue el README original del proyecto OpenBCI GUI.*
+
 # The OpenBCI GUI
 
 <p align="center">
