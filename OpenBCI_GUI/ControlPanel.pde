@@ -641,7 +641,7 @@ class ComPortBox {
         thread.start();
     }
 
-    private LinkedList<String> getCytonComPorts() {
+    /*private LinkedList<String> getCytonComPorts() {
         final String[] names = {"FT231X USB UART", "VCP"};
         final SerialPort[] comPorts = SerialPort.getCommPorts();
         LinkedList<String> results = new LinkedList<String>();
@@ -662,6 +662,23 @@ class ComPortBox {
         }
 
         return results;
+    }*/
+    private LinkedList<String> getCytonComPorts() {
+      final SerialPort[] comPorts = SerialPort.getCommPorts();
+      LinkedList<String> results = new LinkedList<String>();
+      for (SerialPort comPort : comPorts) {
+          // en macOS descartamos los tty* (usar cu.*)
+          if (isMac() && comPort.getSystemPortName().startsWith("tty")) {
+              continue;
+          }
+          String found = "";
+          if (isMac() || isLinux()) found += "/dev/";
+          found += comPort.getSystemPortName();
+          println("ControlPanel: Found COM port: " + found +
+                  " (" + comPort.getDescriptivePortName() + ")");
+          results.add(found);
+      }
+      return results;
     }
 
     public boolean isAutoScanningForCytonSerial() {
@@ -3020,5 +3037,3 @@ class InitBox {
         initSystemButton.getCaptionLabel().setText(text);
     }
 };
-
-

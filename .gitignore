@@ -27,3 +27,7 @@ libGanglionLib.so
 libGanglionScan.so
 libunicorn.so
 OpenBCI_GUI/out/
+
+# Binarios locales pesados (no subir)
+OpenBCI_GUI/App_OpenBCI.zip
+OpenBCI_GUI/windows-amd64/
