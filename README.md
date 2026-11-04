@@ -1,5 +1,17 @@
 # OpenBCI GUI — versión modificada para dispositivo Bluetooth (Tesis)
 
+## ⬇️ Descarga directa (Windows, lista para usar)
+
+### **[Descargar App_OpenBCI.zip](https://github.com/lolobernardi/OpenBCI_GUI/releases/latest/download/App_OpenBCI.zip)** (~300 MB)
+
+También está disponible en la [página del Release](https://github.com/lolobernardi/OpenBCI_GUI/releases/latest). No hace falta instalar Processing ni Java:
+
+1. [Descargá el .zip](https://github.com/lolobernardi/OpenBCI_GUI/releases/latest/download/App_OpenBCI.zip) y descomprimilo.
+2. Abrí `windows-amd64/OpenBCI_GUI.exe`.
+3. Conectá el dispositivo siguiendo los pasos de [Conectar el dispositivo Bluetooth](#5-conectar-el-dispositivo-bluetooth).
+
+> El instalador oficial que se descarga de la página de OpenBCI **no** tiene este cambio, así que no sirve para este dispositivo. Usá esta descarga o ejecutá el código desde Processing ([ver abajo](#cómo-usar-la-gui-con-el-cambio-desde-processing)).
+
 Este repositorio es una copia del [OpenBCI GUI oficial](https://github.com/OpenBCI/OpenBCI_GUI) con **un único cambio**, necesario para poder conectar la interfaz a un dispositivo Bluetooth que emula una placa **Cyton** de OpenBCI.
 
 ## ¿Por qué se hizo el cambio?
@@ -54,13 +66,9 @@ La GUI necesita las librerías que vienen incluidas en la carpeta [`OpenBCI_GUI/
 
 ## Otra forma de ejecutarla: aplicación exportada (sin Processing)
 
-Processing permite exportar el sketch como una aplicación independiente (**File → Export Application…**). Así se genera un ejecutable (`OpenBCI_GUI.exe` en Windows) que **ya incluye Java y el cambio**, y se usa sin instalar Processing ni copiar librerías:
+La [descarga directa](https://github.com/lolobernardi/OpenBCI_GUI/releases/latest/download/App_OpenBCI.zip) del principio es la GUI exportada desde Processing con **File → Export Application…**. Es un ejecutable (`OpenBCI_GUI.exe`) que **ya incluye Java y el cambio**, así que se usa sin instalar Processing ni copiar librerías.
 
-1. Descargá el `.zip` de la aplicación desde la sección [Releases](../../releases) del repositorio (si está publicado) o generalo vos mismo con *Export Application*.
-2. Descomprimilo.
-3. Ejecutá `OpenBCI_GUI.exe` y seguí el paso 5 de arriba para conectar el dispositivo.
-
-> El instalador oficial que se descarga de la página de OpenBCI **no** tiene este cambio, así que no sirve para este dispositivo.
+Si modificás el código, podés generar tu propia versión de la misma forma: abrí el sketch en Processing, usá *Export Application*, elegí Windows y marcá la opción de incluir Java.
 
 ---
 
